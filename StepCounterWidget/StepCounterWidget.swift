@@ -1,68 +1,81 @@
-//
-//  StepCounterWidget.swift
-//  StepCounterWidget
-//
-//  Created by Mert Eray on 23.08.2023.
-//
-
 import WidgetKit
 import SwiftUI
 import Intents
 import HealthKit
 
-struct Provider: TimelineProvider {
-    func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date())
+struct Provider: TimelineProvider{
+    
+    typealias Entry = StepEntry
+    
+    @AppStorage("countStep", store: UserDefaults(suiteName: "group.com.tryyyyy.Steps-Count"))
+    var countStep: Int = 0
+    
+    func placeholder(in context: Context) -> StepEntry {
+        let entry = StepEntry(date: Date(), steps: countStep)
+        return entry
     }
-
-    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date())
+    
+    func getSnapshot(in context: Context, completion: @escaping (Entry) -> ()){
+        let entry = StepEntry(steps: countStep)
         completion(entry)
     }
-
-    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        var entries: [SimpleEntry] = []
-
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate)
-            entries.append(entry)
-        }
-
-        let timeline = Timeline(entries: entries, policy: .atEnd)
-        completion(timeline)
+    
+    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()){
+        let entry = StepEntry(steps: countStep)
+        completion(Timeline(entries: [entry], policy: .atEnd))
+        
     }
+    
+    
 }
 
-struct SimpleEntry: TimelineEntry {
-    let date: Date
+struct StepEntry: TimelineEntry{
+    var date: Date = Date()
+    var steps: Int
+    
 }
 
 struct StepCounterWidgetEntryView : View {
-    var entry: Provider.Entry
+    let entry: Provider.Entry
 
     var body: some View {
-        Text(entry.date, style: .time)
+        ZStack{
+            Image("black")
+                .scaledToFill()
+            
+            Image("run")
+                
+                .resizable()
+                .scaledToFit()
+                .frame(width: 130, height: 160)
+                
+                
+            VStack{
+                Text("STEP")
+                    .font(Font.custom("PoetsenOne-Regular", size: 13))
+                Text("\(entry.steps)")
+                    .font(Font.custom("PoetsenOne-Regular", size: 18))
+                    
+
+            }
+            .offset(x: 35, y: 35)
+            .multilineTextAlignment(.center)
+            .foregroundColor(.white)
+
+        }
+        .edgesIgnoringSafeArea(.all)
     }
 }
 
-struct StepCounterWidget: Widget {
-    let kind: String = "StepCounterWidget"
-
-    var body: some WidgetConfiguration {
+@main
+struct StepWidget: Widget{
+    private let kind = "StepWidget"
+    
+    var body: some WidgetConfiguration{
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             StepCounterWidgetEntryView(entry: entry)
         }
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        .supportedFamilies([.systemSmall])
     }
 }
 
-struct StepCounterWidget_Previews: PreviewProvider {
-    static var previews: some View {
-        StepCounterWidgetEntryView(entry: SimpleEntry(date: Date()))
-            .previewContext(WidgetPreviewContext(family: .systemSmall))
-    }
-}

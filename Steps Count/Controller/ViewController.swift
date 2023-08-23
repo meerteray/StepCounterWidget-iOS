@@ -2,9 +2,9 @@ import UIKit
 import HealthKit
 
 class ViewController: UIViewController {
-    
+
     @IBOutlet weak var stepsData: UILabel!
-    
+
         let healthStore = HKHealthStore()
 
         override func viewDidLoad() {
@@ -54,6 +54,4 @@ class ViewController: UIViewController {
 
             healthStore.execute(query)
         }
-}
-
-
+    }
