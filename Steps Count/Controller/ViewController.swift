@@ -54,5 +54,6 @@ class ViewController: UIViewController {
 
             healthStore.execute(query)
         }
-    }
+}
+
 

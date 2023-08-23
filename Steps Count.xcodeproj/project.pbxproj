@@ -13,7 +13,24 @@
 		E359F1E02A93641600671034 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E359F1DE2A93641600671034 /* Main.storyboard */; };
 		E359F1E22A93641600671034 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E359F1E12A93641600671034 /* Assets.xcassets */; };
 		E359F1E52A93641600671034 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E359F1E32A93641600671034 /* LaunchScreen.storyboard */; };
+		E3F0D9212A9634830068D382 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3F0D9202A9634830068D382 /* WidgetKit.framework */; };
+		E3F0D9232A9634830068D382 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3F0D9222A9634830068D382 /* SwiftUI.framework */; };
+		E3F0D9262A9634830068D382 /* StepCounterWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F0D9252A9634830068D382 /* StepCounterWidgetBundle.swift */; };
+		E3F0D9282A9634830068D382 /* StepCounterWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F0D9272A9634830068D382 /* StepCounterWidgetLiveActivity.swift */; };
+		E3F0D92A2A9634830068D382 /* StepCounterWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F0D9292A9634830068D382 /* StepCounterWidget.swift */; };
+		E3F0D92C2A9634840068D382 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3F0D92B2A9634840068D382 /* Assets.xcassets */; };
+		E3F0D9302A9634840068D382 /* StepCounterWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E3F0D91E2A9634830068D382 /* StepCounterWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E3F0D92E2A9634840068D382 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E359F1CD2A93641500671034 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E3F0D91D2A9634830068D382;
+			remoteInfo = StepCounterWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		E3D91A5B2A94E629000A3977 /* Embed Foundation Extensions */ = {
@@ -22,6 +39,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				E3F0D9302A9634840068D382 /* StepCounterWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -39,6 +57,14 @@
 		E359F1E42A93641600671034 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E359F1E62A93641600671034 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E359F1EC2A93643D00671034 /* Steps Count.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Steps Count.entitlements"; sourceTree = "<group>"; };
+		E3F0D91E2A9634830068D382 /* StepCounterWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = StepCounterWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3F0D9202A9634830068D382 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		E3F0D9222A9634830068D382 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		E3F0D9252A9634830068D382 /* StepCounterWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepCounterWidgetBundle.swift; sourceTree = "<group>"; };
+		E3F0D9272A9634830068D382 /* StepCounterWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepCounterWidgetLiveActivity.swift; sourceTree = "<group>"; };
+		E3F0D9292A9634830068D382 /* StepCounterWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepCounterWidget.swift; sourceTree = "<group>"; };
+		E3F0D92B2A9634840068D382 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E3F0D92D2A9634840068D382 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +72,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E3F0D91B2A9634830068D382 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3F0D9232A9634830068D382 /* SwiftUI.framework in Frameworks */,
+				E3F0D9212A9634830068D382 /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,6 +108,8 @@
 			children = (
 				E34990E12A96047A001ED0B9 /* StepWidgetExtension.entitlements */,
 				E359F1D72A93641600671034 /* Steps Count */,
+				E3F0D9242A9634830068D382 /* StepCounterWidget */,
+				E3F0D91F2A9634830068D382 /* Frameworks */,
 				E359F1D62A93641600671034 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -81,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				E359F1D52A93641600671034 /* Steps Count.app */,
+				E3F0D91E2A9634830068D382 /* StepCounterWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -100,6 +138,27 @@
 			path = "Steps Count";
 			sourceTree = "<group>";
 		};
+		E3F0D91F2A9634830068D382 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E3F0D9202A9634830068D382 /* WidgetKit.framework */,
+				E3F0D9222A9634830068D382 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E3F0D9242A9634830068D382 /* StepCounterWidget */ = {
+			isa = PBXGroup;
+			children = (
+				E3F0D9252A9634830068D382 /* StepCounterWidgetBundle.swift */,
+				E3F0D9272A9634830068D382 /* StepCounterWidgetLiveActivity.swift */,
+				E3F0D9292A9634830068D382 /* StepCounterWidget.swift */,
+				E3F0D92B2A9634840068D382 /* Assets.xcassets */,
+				E3F0D92D2A9634840068D382 /* Info.plist */,
+			);
+			path = StepCounterWidget;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -115,11 +174,29 @@
 			buildRules = (
 			);
 			dependencies = (
+				E3F0D92F2A9634840068D382 /* PBXTargetDependency */,
 			);
 			name = "Steps Count";
 			productName = "Steps Count";
 			productReference = E359F1D52A93641600671034 /* Steps Count.app */;
 			productType = "com.apple.product-type.application";
+		};
+		E3F0D91D2A9634830068D382 /* StepCounterWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E3F0D9312A9634840068D382 /* Build configuration list for PBXNativeTarget "StepCounterWidgetExtension" */;
+			buildPhases = (
+				E3F0D91A2A9634830068D382 /* Sources */,
+				E3F0D91B2A9634830068D382 /* Frameworks */,
+				E3F0D91C2A9634830068D382 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StepCounterWidgetExtension;
+			productName = StepCounterWidgetExtension;
+			productReference = E3F0D91E2A9634830068D382 /* StepCounterWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -132,6 +209,9 @@
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					E359F1D42A93641500671034 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+					E3F0D91D2A9634830068D382 = {
 						CreatedOnToolsVersion = 14.3.1;
 					};
 				};
@@ -150,6 +230,7 @@
 			projectRoot = "";
 			targets = (
 				E359F1D42A93641500671034 /* Steps Count */,
+				E3F0D91D2A9634830068D382 /* StepCounterWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -162,6 +243,14 @@
 				E359F1E52A93641600671034 /* LaunchScreen.storyboard in Resources */,
 				E359F1E22A93641600671034 /* Assets.xcassets in Resources */,
 				E359F1E02A93641600671034 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E3F0D91C2A9634830068D382 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3F0D92C2A9634840068D382 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,7 +267,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E3F0D91A2A9634830068D382 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3F0D9262A9634830068D382 /* StepCounterWidgetBundle.swift in Sources */,
+				E3F0D9282A9634830068D382 /* StepCounterWidgetLiveActivity.swift in Sources */,
+				E3F0D92A2A9634830068D382 /* StepCounterWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E3F0D92F2A9634840068D382 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E3F0D91D2A9634830068D382 /* StepCounterWidgetExtension */;
+			targetProxy = E3F0D92E2A9634840068D382 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		E359F1DE2A93641600671034 /* Main.storyboard */ = {
@@ -317,6 +424,7 @@
 		E359F1EA2A93641600671034 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Steps Count/Steps Count.entitlements";
@@ -346,6 +454,7 @@
 		E359F1EB2A93641600671034 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Steps Count/Steps Count.entitlements";
@@ -372,6 +481,60 @@
 			};
 			name = Release;
 		};
+		E3F0D9322A9634840068D382 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = T2644JQ8VH;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StepCounterWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = StepCounterWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tryyyyy.Steps-Count.StepCounterWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E3F0D9332A9634840068D382 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = T2644JQ8VH;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StepCounterWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = StepCounterWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tryyyyy.Steps-Count.StepCounterWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -389,6 +552,15 @@
 			buildConfigurations = (
 				E359F1EA2A93641600671034 /* Debug */,
 				E359F1EB2A93641600671034 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E3F0D9312A9634840068D382 /* Build configuration list for PBXNativeTarget "StepCounterWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E3F0D9322A9634840068D382 /* Debug */,
+				E3F0D9332A9634840068D382 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
