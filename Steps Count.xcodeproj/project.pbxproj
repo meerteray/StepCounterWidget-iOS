@@ -13,6 +13,10 @@
 		E359F1E02A93641600671034 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E359F1DE2A93641600671034 /* Main.storyboard */; };
 		E359F1E22A93641600671034 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E359F1E12A93641600671034 /* Assets.xcassets */; };
 		E359F1E52A93641600671034 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E359F1E32A93641600671034 /* LaunchScreen.storyboard */; };
+		E35D646C2A96458F0077F402 /* CountSteps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35D646B2A96458F0077F402 /* CountSteps.swift */; };
+		E35D646D2A96458F0077F402 /* CountSteps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35D646B2A96458F0077F402 /* CountSteps.swift */; };
+		E398712B2A97490500B8D5D8 /* StepCounterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E398712A2A97490500B8D5D8 /* StepCounterApp.swift */; };
+		E398712D2A97496300B8D5D8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E398712C2A97496300B8D5D8 /* ContentView.swift */; };
 		E3F0D9212A9634830068D382 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3F0D9202A9634830068D382 /* WidgetKit.framework */; };
 		E3F0D9232A9634830068D382 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3F0D9222A9634830068D382 /* SwiftUI.framework */; };
 		E3F0D9262A9634830068D382 /* StepCounterWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F0D9252A9634830068D382 /* StepCounterWidgetBundle.swift */; };
@@ -56,6 +60,9 @@
 		E359F1E42A93641600671034 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E359F1E62A93641600671034 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E359F1EC2A93643D00671034 /* Steps Count.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Steps Count.entitlements"; sourceTree = "<group>"; };
+		E35D646B2A96458F0077F402 /* CountSteps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountSteps.swift; sourceTree = "<group>"; };
+		E398712A2A97490500B8D5D8 /* StepCounterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepCounterApp.swift; sourceTree = "<group>"; };
+		E398712C2A97496300B8D5D8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E3F0D91E2A9634830068D382 /* StepCounterWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = StepCounterWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3F0D9202A9634830068D382 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		E3F0D9222A9634830068D382 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -87,12 +94,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E34990E22A96049A001ED0B9 /* Controller */ = {
+		E34990E22A96049A001ED0B9 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				E359F1DC2A93641600671034 /* ViewController.swift */,
+				E35D646B2A96458F0077F402 /* CountSteps.swift */,
+				E398712A2A97490500B8D5D8 /* StepCounterApp.swift */,
+				E398712C2A97496300B8D5D8 /* ContentView.swift */,
 			);
-			path = Controller;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		E34990E32A9604A4001ED0B9 /* View */ = {
@@ -130,7 +140,7 @@
 				E359F1D82A93641600671034 /* AppDelegate.swift */,
 				E359F1DA2A93641600671034 /* SceneDelegate.swift */,
 				E34990E32A9604A4001ED0B9 /* View */,
-				E34990E22A96049A001ED0B9 /* Controller */,
+				E34990E22A96049A001ED0B9 /* Controllers */,
 				E359F1E12A93641600671034 /* Assets.xcassets */,
 				E359F1E32A93641600671034 /* LaunchScreen.storyboard */,
 				E359F1E62A93641600671034 /* Info.plist */,
@@ -261,9 +271,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E398712B2A97490500B8D5D8 /* StepCounterApp.swift in Sources */,
 				E359F1DD2A93641600671034 /* ViewController.swift in Sources */,
+				E398712D2A97496300B8D5D8 /* ContentView.swift in Sources */,
 				E359F1D92A93641600671034 /* AppDelegate.swift in Sources */,
 				E359F1DB2A93641600671034 /* SceneDelegate.swift in Sources */,
+				E35D646C2A96458F0077F402 /* CountSteps.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,6 +287,7 @@
 				E3F0D9262A9634830068D382 /* StepCounterWidgetBundle.swift in Sources */,
 				E3F0D9282A9634830068D382 /* StepCounterWidgetLiveActivity.swift in Sources */,
 				E3F0D92A2A9634830068D382 /* StepCounterWidget.swift in Sources */,
+				E35D646D2A96458F0077F402 /* CountSteps.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
