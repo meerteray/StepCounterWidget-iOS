@@ -9,7 +9,8 @@ struct CountSteps: View {
     
     let healtStore = HKHealthStore()
    @State var stepCount: Int = 0
-    
+  // @State private var showingAlert = false
+    @State private var presentAlert = false
     var body: some View {
         
       VStack(spacing: 4){
@@ -19,16 +20,16 @@ struct CountSteps: View {
           Text("\(stepCount)")
               .font(.title2)
           
-          Button(action: {
-                          // Handle button tap here
-                      }) {
-                          Text("Tap me!")
-                              .padding(10)
-                              .background(Color.blue)
-                              .foregroundColor(.white)
-                              .cornerRadius(10)
-                      }
-                      .padding(.bottom)
+          Button("Add Step") {
+                     presentAlert = true
+                 }
+                 .alert("Add Step", isPresented: $presentAlert, actions: {
+                     // Any view other than Button would be ignored
+                     TextField("TextField", text: .constant(" "))
+                 }, message: {
+                     // Any view other than Text would be ignored
+                     TextField("TextField", text: .constant("Value"))
+                 })
       }
       .onAppear{
             self.requestAuth()
