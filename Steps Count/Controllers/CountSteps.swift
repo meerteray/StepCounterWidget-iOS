@@ -6,11 +6,12 @@ struct CountSteps: View {
     
     @AppStorage("countStep", store: UserDefaults(suiteName: "group.com.tryyyyy.Steps-Count"))
     var countStep: Int = 0
-    
     let healtStore = HKHealthStore()
-   @State var stepCount: Int = 0
-  // @State private var showingAlert = false
-    @State private var presentAlert = false
+    
+    @State var stepCount: Int = 0
+    @State private var showingAlert = false
+    @State private var value = ""
+
     var body: some View {
         
       VStack(spacing: 4){
@@ -21,15 +22,15 @@ struct CountSteps: View {
               .font(.title2)
           
           Button("Add Step") {
-                     presentAlert = true
+              showingAlert.toggle()
                  }
-                 .alert("Add Step", isPresented: $presentAlert, actions: {
-                     // Any view other than Button would be ignored
-                     TextField("TextField", text: .constant(" "))
-                 }, message: {
-                     // Any view other than Text would be ignored
-                     TextField("TextField", text: .constant("Value"))
-                 })
+                 .alert("Add Step", isPresented: $showingAlert) {
+                     TextField("TextField", text: $value)
+                     Button("OK", action: submit)
+                     
+                 } message: {
+                     Text("Xcode will print whatever you type.")
+                 }
       }
       .onAppear{
             self.requestAuth()
@@ -38,6 +39,12 @@ struct CountSteps: View {
 
         .padding()
     }
+    
+    func submit() {
+        print("You entered \(value)")
+        print("Sum steps \((Int(value)!) + countStep )")
+        stepCount = Int(value)! + countStep
+        }
     
     func requestAuth(){
         _ = HKQuantityType.quantityType(forIdentifier: .stepCount)
@@ -75,9 +82,9 @@ struct CountSteps: View {
                 let steps = Int(sum.doubleValue(for: HKUnit.count()))
                 self.stepCount = steps
                 self.countStep = steps
+
             }else{
                 self.stepCount = 0
-               
                 
             }
         }
