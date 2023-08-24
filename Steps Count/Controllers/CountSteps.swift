@@ -18,6 +18,17 @@ struct CountSteps: View {
               .font(.title3)
           Text("\(stepCount)")
               .font(.title2)
+          
+          Button(action: {
+                          // Handle button tap here
+                      }) {
+                          Text("Tap me!")
+                              .padding(10)
+                              .background(Color.blue)
+                              .foregroundColor(.white)
+                              .cornerRadius(10)
+                      }
+                      .padding(.bottom)
       }
       .onAppear{
             self.requestAuth()
