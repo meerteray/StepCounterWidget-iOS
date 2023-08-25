@@ -10,21 +10,41 @@ struct CountSteps: View {
     let healthStore = HKHealthStore()
     
     @State private var stepCount: Int = 0
-    @State private var showingAlert = false
-    @State private var value = ""
+    @State private var sleepHours: Int = 0
+    @State private var sleepAlert = false
+    @State private var stepsAlert = false
+    @State private var sleepValue = ""
+    @State private var stepsvalue = ""
 
     var body: some View {
         VStack(spacing: 4) {
-            Text("STEPS")
-                .font(.title3)
-            Text("\(stepCount)")
-                .font(.title2)
             
-            Button("Add Step") {
-                showingAlert.toggle()
+            //Sleep
+            Text("Sleep")
+                .font(.title2)
+            Text("\(sleepHours) hr")
+                .font(.title3)
+            Button("Add Sleep") {
+                sleepAlert.toggle()
             }
-            .alert("Add Step", isPresented: $showingAlert) {
-                TextField("Enter Step Count", text: $value)
+            .alert("Add Sleep", isPresented: $sleepAlert) {
+                TextField("Enter Sleep Hours", text: $sleepValue)
+                Button("OK", action: {})
+            } message: {
+                Text("Enter the number of hours to add.")
+            }
+            
+            .padding(.bottom, 70)
+            //Steps
+            Text("Steps")
+                .font(.title2)
+            Text("\(stepCount)")
+                .font(.title3)
+            Button("Add Step") {
+                stepsAlert.toggle()
+            }
+            .alert("Add Step", isPresented: $stepsAlert) {
+                TextField("Enter Step Count", text: $stepsvalue)
                 Button("OK", action: submit)
             } message: {
                 Text("Enter the number of steps to add.")
@@ -37,6 +57,7 @@ struct CountSteps: View {
         .padding()
     }
     
+    // stepCountType
     func saveStepCountToHealthKit() {
         guard let stepCountType = HKQuantityType.quantityType(forIdentifier: .stepCount) else {
             return
@@ -44,7 +65,7 @@ struct CountSteps: View {
 
         let countUnit = HKUnit.count()
         print("1984 3 ", stepCount)
-        let stepCountQuantity = HKQuantity(unit: countUnit, doubleValue: Double(value)!)
+        let stepCountQuantity = HKQuantity(unit: countUnit, doubleValue: Double(stepsvalue)!)
         print("1984 4" , stepCount)
         let stepCountSample = HKQuantitySample(
             type: stepCountType,
@@ -61,10 +82,16 @@ struct CountSteps: View {
             }
         }
     }
+    // Sleep
+  /*  func trysleep() {
+        guard let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis) else {
+        return
+        }
+    } */
     
     func submit() {
-        guard let enteredValue = Int(value) else {
-            print("Invalid input: \(value)")
+        guard let enteredValue = Int(stepsvalue) else {
+            print("Invalid input: \(stepsvalue)")
             return
         }
         
