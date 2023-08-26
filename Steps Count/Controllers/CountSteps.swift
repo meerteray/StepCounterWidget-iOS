@@ -57,7 +57,6 @@ struct CountSteps: View {
         .padding()
     }
     
-    // stepCountType
     func saveStepCountToHealthKit() {
         guard let stepCountType = HKQuantityType.quantityType(forIdentifier: .stepCount) else {
             return
@@ -82,13 +81,7 @@ struct CountSteps: View {
             }
         }
     }
-    // Sleep
-  /*  func trysleep() {
-        guard let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis) else {
-        return
-        }
-    } */
-    
+
     func submit() {
         guard let enteredValue = Int(stepsvalue) else {
             print("Invalid input: \(stepsvalue)")
@@ -102,18 +95,29 @@ struct CountSteps: View {
     }
     
     func requestAuth(){
+       
         guard let stepCountType = HKQuantityType.quantityType(forIdentifier: .stepCount) else {
+            return
+        }
+        guard let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis) else {
             return
         }
         
         let shareTypes: Set<HKSampleType> = [stepCountType]
-        let readTypes: Set<HKObjectType> = [stepCountType]
-        
+        let readTypes: Set<HKObjectType> = [stepCountType, sleepType]
+         
         healthStore.requestAuthorization(toShare: shareTypes, read: readTypes) { (success, error) in
             if error != nil {
                 print("Not authorized to use HealthKit.")
             } else if success {
                 print("Authorization granted.")
+            }
+        }
+        healthStore.requestAuthorization(toShare: nil, read: readTypes) { (success, error) in
+            if error != nil {
+                print("Not authorized to access sleep data.")
+            } else if success {
+                print("Authorization granted for sleep data.")
             }
         }
     }

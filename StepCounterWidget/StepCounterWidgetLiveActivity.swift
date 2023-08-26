@@ -1,28 +1,17 @@
-//
-//  StepCounterWidgetLiveActivity.swift
-//  StepCounterWidget
-//
-//  Created by Mert Eray on 23.08.2023.
-//
-
 import ActivityKit
 import WidgetKit
 import SwiftUI
 
 struct StepCounterWidgetAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
-        // Dynamic stateful properties about your activity go here!
         var value: Int
     }
-
-    // Fixed non-changing properties about your activity go here!
     var name: String
 }
 
 struct StepCounterWidgetLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: StepCounterWidgetAttributes.self) { context in
-            // Lock screen/banner UI goes here
             VStack {
                 Text("Hello")
             }
@@ -31,8 +20,6 @@ struct StepCounterWidgetLiveActivity: Widget {
 
         } dynamicIsland: { context in
             DynamicIsland {
-                // Expanded UI goes here.  Compose the expanded UI through
-                // various regions, like leading/trailing/center/bottom
                 DynamicIslandExpandedRegion(.leading) {
                     Text("Leading")
                 }
@@ -41,7 +28,6 @@ struct StepCounterWidgetLiveActivity: Widget {
                 }
                 DynamicIslandExpandedRegion(.bottom) {
                     Text("Bottom")
-                    // more content
                 }
             } compactLeading: {
                 Text("L")

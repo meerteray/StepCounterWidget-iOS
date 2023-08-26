@@ -25,14 +25,11 @@ struct Provider: TimelineProvider{
         completion(Timeline(entries: [entry], policy: .atEnd))
         
     }
-    
-    
 }
 
 struct StepEntry: TimelineEntry{
     var date: Date = Date()
     var steps: Int
-    
 }
 
 struct StepCounterWidgetEntryView : View {
@@ -49,14 +46,12 @@ struct StepCounterWidgetEntryView : View {
                 .scaledToFit()
                 .frame(width: 130, height: 160)
                 
-                
             VStack{
                 Text("STEP")
                     .font(Font.custom("PoetsenOne-Regular", size: 13))
                 Text("\(entry.steps)")
                     .font(Font.custom("PoetsenOne-Regular", size: 18))
                     
-
             }
             .offset(x: 35, y: 35)
             .multilineTextAlignment(.center)
