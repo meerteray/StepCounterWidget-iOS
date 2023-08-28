@@ -17,7 +17,7 @@ struct CountSteps: View {
 
     var body: some View {
         VStack(spacing: 4) {
-            dataSection(title: "Sleep", value: "\(sleepHours) hr", alertText: "Enter Sleep Hours", valueBinding: $sleepValue, action: fetchSleep)
+            dataSection(title: "Sleep", value: "\(sleepHours) hr", alertText: "Enter Sleep Hours", valueBinding: $sleepValue, action: submit)
                 .padding(.bottom, 70)
             dataSection(title: "Steps", value: "\(stepCount)", alertText: "Enter Step Count", valueBinding: $stepsValue, action: submit)
         }
@@ -74,16 +74,49 @@ struct CountSteps: View {
             }
         }
     }
+    func saveSleepDataToHealthKit(hours: Double) {
+            guard let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis) else {
+                return
+            }
 
-    func submit() {
-        guard let enteredValue = Int(stepsValue) else {
-            print("Invalid input: \(stepsValue)")
-            return
+            let sleepCategoryValue = HKCategoryValueSleepAnalysis.inBed.rawValue
+            let sleepSample = HKCategorySample(
+                type: sleepType,
+                value: sleepCategoryValue,
+                start: Date(),
+                end: Date()
+            )
+
+            healthStore.save(sleepSample) { (success, error) in
+                if let error = error {
+                    print("Error writing sleep data: \(error.localizedDescription)")
+                } else {
+                    print("Sleep data written successfully!")
+                }
+            }
         }
 
-        stepCount += enteredValue
-        saveStepCountToHealthKit()
+
+    func submit() {
+        if sleepAlert {
+            guard let sleepEnteredValue = Double(sleepValue) else {
+                print("Invalid sleep input: \(sleepValue)")
+                return
+            }
+            sleepHours += Int(sleepEnteredValue)
+            saveSleepDataToHealthKit(hours: sleepEnteredValue)
+            sleepValue = ""
+        } else {
+            guard let stepsEnteredValue = Double(stepsValue) else {
+                print("Invalid steps input: \(stepsValue)")
+                return
+            }
+            stepCount += Int(stepsEnteredValue)
+            saveStepCountToHealthKit()
+            stepsValue = ""
+        }
     }
+
 
     func requestAuthorization() {
         let readTypes = Set([HKObjectType.quantityType(forIdentifier: .stepCount),
@@ -128,6 +161,7 @@ struct CountSteps: View {
 
             // Convert seconds to hours
             sleepHours = sleepDuration / 3600
+            // print("1984", sleepHours)
         }
         healthStore.execute(query)
     }
