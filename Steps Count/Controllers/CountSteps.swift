@@ -53,6 +53,7 @@ struct CountSteps: View {
         .onAppear {
             self.requestAuth()
             self.fetchStepCount()
+            self.fetchSleep()
         }
         .padding()
     }
@@ -112,8 +113,8 @@ struct CountSteps: View {
             } else if success {
                 print("Authorization granted.")
             }
-        }
-        healthStore.requestAuthorization(toShare: nil, read: readTypes) { (success, error) in
+        }                                       //nil
+        healthStore.requestAuthorization(toShare: shareTypes, read: readTypes) { (success, error) in
             if error != nil {
                 print("Not authorized to access sleep data.")
             } else if success {
@@ -122,6 +123,42 @@ struct CountSteps: View {
         }
     }
     
+    func fetchSleep() {
+        guard let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis) else {
+            return
+        }
+        
+        let calendar = Calendar.current
+        let now = Date()
+        let startOfDay = calendar.startOfDay(for: now)
+        let predicate = HKQuery.predicateForSamples(withStart: startOfDay, end: now, options: .strictStartDate)
+        let query = HKSampleQuery(sampleType: sleepType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { (query, samples, error) in
+            if let error = error {
+                print("Error fetching sleep data: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let samples = samples as? [HKCategorySample] else {
+                print("No sleep data available for specific predicate.")
+                return
+            }
+            
+            var sleepDuration = 0
+            for sample in samples {
+                let sleepValue = sample.value == HKCategoryValueSleepAnalysis.inBed.rawValue
+                if sleepValue {
+                    let duration = Int(sample.endDate.timeIntervalSince(sample.startDate))
+                    sleepDuration += duration
+                }
+            }
+            
+            // Convert seconds to hours
+            let sleepHours = sleepDuration / 3600
+            self.sleepHours = sleepHours
+        }
+        healthStore.execute(query)
+    }
+
     func fetchStepCount(){
         guard let stepCountType = HKQuantityType.quantityType(forIdentifier: .stepCount) else {
             return
