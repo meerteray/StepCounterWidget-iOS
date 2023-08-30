@@ -1,5 +1,6 @@
 import SwiftUI
 import HealthKit
+import WidgetKit
 
 struct CountSteps: View {
 
@@ -7,8 +8,8 @@ struct CountSteps: View {
     var countStep: Int = 0
 
     let healthStore = HKHealthStore()
-
     @State private var stepCount: Int = 0
+    
     @State private var sleepHours: Int = 0
     @State private var sleepAlert = false
     @State private var stepsAlert = false
@@ -17,9 +18,9 @@ struct CountSteps: View {
 
     var body: some View {
         VStack(spacing: 4) {
-            dataSection(title: "Sleep", value: "\(sleepHours) hr", alertText: "Enter Sleep Hours", valueBinding: $sleepValue, action: submit)
+            dataSection(title: "Sleep", value: "\(sleepHours) hr", alertText: "Enter Sleep Hours", valueBinding: $sleepValue, action: submitSleep)
                 .padding(.bottom, 70)
-            dataSection(title: "Steps", value: "\(stepCount)", alertText: "Enter Step Count", valueBinding: $stepsValue, action: submit)
+            dataSection(title: "Steps", value: "\(stepCount)", alertText: "Enter Step Count", valueBinding: $stepsValue, action: submitStepCount)
         }
         .onAppear {
             requestAuthorization()
@@ -52,13 +53,12 @@ struct CountSteps: View {
     }
 
     func saveStepCountToHealthKit() {
-        guard let stepCountType = HKQuantityType.quantityType(forIdentifier: .stepCount),
-              let steps = Double(stepsValue) else {
+        guard let stepCountType = HKQuantityType.quantityType(forIdentifier: .stepCount) else {
             return
         }
 
         let countUnit = HKUnit.count()
-        let stepCountQuantity = HKQuantity(unit: countUnit, doubleValue: steps)
+        let stepCountQuantity = HKQuantity(unit: countUnit, doubleValue: Double(stepsValue)!)
         let stepCountSample = HKQuantitySample(
             type: stepCountType,
             quantity: stepCountQuantity,
@@ -79,7 +79,7 @@ struct CountSteps: View {
                 return
             }
 
-            let sleepCategoryValue = HKCategoryValueSleepAnalysis.inBed.rawValue
+            let sleepCategoryValue = 1
             let sleepSample = HKCategorySample(
                 type: sleepType,
                 value: sleepCategoryValue,
@@ -96,33 +96,35 @@ struct CountSteps: View {
             }
         }
 
-
-    func submit() {
-        if sleepAlert {
-            guard let sleepEnteredValue = Double(sleepValue) else {
-                print("Invalid sleep input: \(sleepValue)")
-                return
-            }
-            sleepHours += Int(sleepEnteredValue)
-            saveSleepDataToHealthKit(hours: sleepEnteredValue)
-            sleepValue = ""
-        } else {
-            guard let stepsEnteredValue = Double(stepsValue) else {
-                print("Invalid steps input: \(stepsValue)")
-                return
-            }
-            stepCount += Int(stepsEnteredValue)
-            saveStepCountToHealthKit()
-            stepsValue = ""
+    func submitSleep() {
+                guard let sleepEnteredValue = Double(sleepValue) else {
+                    print("Invalid sleep input: \(sleepValue)")
+                    return
+                }
+                sleepHours += Int(sleepEnteredValue)
+                saveSleepDataToHealthKit(hours: sleepEnteredValue)
+                sleepValue = ""
+            
         }
-    }
+        
+    func submitStepCount() {
+           
+                guard let stepsEnteredValue = Int(stepsValue) else {
+                    print("Invalid steps input: \(stepsValue)")
+                    return
+                }
+                stepCount += Int(stepsEnteredValue)
+                saveStepCountToHealthKit()
+                stepsValue = ""
+            
+        }
 
-
+    
     func requestAuthorization() {
         let readTypes = Set([HKObjectType.quantityType(forIdentifier: .stepCount),
                              HKObjectType.categoryType(forIdentifier: .sleepAnalysis)].compactMap { $0 })
 
-        healthStore.requestAuthorization(toShare: [], read: readTypes) { (success, error) in
+        healthStore.requestAuthorization(toShare: readTypes, read: readTypes) { (success, error) in
             if error != nil {
                 print("Not authorized to use HealthKit.")
             } else if success {
@@ -131,46 +133,42 @@ struct CountSteps: View {
         }
     }
 
+
     func fetchSleep() {
         guard let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis) else {
-            return
+        return
         }
 
         let calendar = Calendar.current
         let now = Date()
         let startOfDay = calendar.startOfDay(for: now)
         let predicate = HKQuery.predicateForSamples(withStart: startOfDay, end: now, options: .strictStartDate)
-        let query = HKSampleQuery(sampleType: sleepType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { (query, samples, error) in
+        let query = HKSampleQuery(sampleType: sleepType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { (query,samples, error) in
             if let error = error {
                 print("Error fetching sleep data: \(error.localizedDescription)")
                 return
             }
-
             guard let samples = samples as? [HKCategorySample] else {
                 print("No sleep data available for specific predicate.")
                 return
             }
-
-            var sleepDuration = 0
+            var sleepDurationInSeconds = 0
             for sample in samples {
                 if sample.value == HKCategoryValueSleepAnalysis.inBed.rawValue {
                     let duration = Int(sample.endDate.timeIntervalSince(sample.startDate))
-                    sleepDuration += duration
+                    sleepDurationInSeconds += duration
                 }
             }
-
-            // Convert seconds to hours
-            sleepHours = sleepDuration / 3600
-            // print("1984", sleepHours)
+            let sleepHours = sleepDurationInSeconds / 3600
+            let sleepMinutes = (sleepDurationInSeconds % 3600) / 60
+            self.sleepHours = sleepHours
+            print("Health App Sleep Hours: \(sleepHours) hours \(sleepMinutes) minutes")
         }
         healthStore.execute(query)
     }
 
     func fetchStepCount() {
-        guard let stepCountType = HKQuantityType.quantityType(forIdentifier: .stepCount) else {
-            return
-        }
-
+        let stepCountType = HKQuantityType.quantityType(forIdentifier: .stepCount)!
         let calendar = Calendar.current
         let now = Date()
         let startOfDay = calendar.startOfDay(for: now)
