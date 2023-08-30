@@ -74,6 +74,7 @@ struct CountSteps: View {
             }
         }
     }
+    
     func saveSleepDataToHealthKit(minute: Int) {
             guard let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis) else {
                 return
@@ -119,7 +120,6 @@ struct CountSteps: View {
             
         }
 
-    
     func requestAuthorization() {
         let readTypes = Set([HKObjectType.quantityType(forIdentifier: .stepCount),
                              HKObjectType.categoryType(forIdentifier: .sleepAnalysis)].compactMap { $0 })
@@ -132,7 +132,6 @@ struct CountSteps: View {
             }
         }
     }
-
 
     func fetchSleep() {
         guard let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis) else {
