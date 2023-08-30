@@ -18,7 +18,7 @@ struct CountSteps: View {
 
     var body: some View {
         VStack(spacing: 4) {
-            dataSection(title: "Sleep", value: "\(sleepHours) hr", alertText: "Enter Sleep Hours", valueBinding: $sleepValue, action: submitSleep)
+            dataSection(title: "Sleep", value: "\(sleepHours) hr", alertText: "Enter Sleep Minute", valueBinding: $sleepValue, action: submitSleep)
                 .padding(.bottom, 70)
             dataSection(title: "Steps", value: "\(stepCount)", alertText: "Enter Step Count", valueBinding: $stepsValue, action: submitStepCount)
         }
@@ -74,17 +74,17 @@ struct CountSteps: View {
             }
         }
     }
-    func saveSleepDataToHealthKit(hours: Double) {
+    func saveSleepDataToHealthKit(minute: Int) {
             guard let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis) else {
                 return
             }
 
-            let sleepCategoryValue = 1
+    
             let sleepSample = HKCategorySample(
                 type: sleepType,
-                value: sleepCategoryValue,
+                value: 1,
                 start: Date(),
-                end: Date()
+                end: Date().adding(minutes: minute)
             )
 
             healthStore.save(sleepSample) { (success, error) in
@@ -102,7 +102,7 @@ struct CountSteps: View {
                     return
                 }
                 sleepHours += Int(sleepEnteredValue)
-                saveSleepDataToHealthKit(hours: sleepEnteredValue)
+                saveSleepDataToHealthKit(minute: Int(sleepEnteredValue))
                 sleepValue = ""
             
         }
@@ -154,7 +154,7 @@ struct CountSteps: View {
             }
             var sleepDurationInSeconds = 0
             for sample in samples {
-                if sample.value == HKCategoryValueSleepAnalysis.inBed.rawValue {
+                if sample.value == HKCategoryValueSleepAnalysis.asleepUnspecified.rawValue {
                     let duration = Int(sample.endDate.timeIntervalSince(sample.startDate))
                     sleepDurationInSeconds += duration
                 }
@@ -199,5 +199,11 @@ struct CountSteps: View {
 struct CountSteps_Previews: PreviewProvider {
     static var previews: some View {
         CountSteps()
+    }
+}
+
+extension Date {
+    func adding(minutes: Int) -> Date {
+        return Calendar.current.date(byAdding: .minute, value: minutes, to: self)!
     }
 }
